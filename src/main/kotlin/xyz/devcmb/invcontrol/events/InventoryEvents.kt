@@ -13,7 +13,7 @@ internal class InventoryEvents : Listener {
     fun onInventoryClick(event: InventoryClickEvent) {
         if(event.currentItem == null) return
 
-        val shouldCancel = Registry.buttonClick(event.currentItem!!)
+        val shouldCancel = Registry.buttonClick(event.inventory, event.currentItem!!)
         if(shouldCancel) {
             event.isCancelled = true
         }

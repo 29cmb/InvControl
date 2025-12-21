@@ -1,41 +1,36 @@
 package xyz.devcmb.invcontrol
 
-import org.bukkit.NamespacedKey
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
-import xyz.devcmb.invcontrol.common.InventoryItem
+import xyz.devcmb.invcontrol.chest.ChestInventoryHolder
+import xyz.devcmb.invcontrol.chest.ChestInventoryUI
 
 /**
  * The object responsible for keeping track of the items in inventories.
- * TODO: Remove items once the menu has been closed
  */
 internal object Registry {
-    private val items: HashMap<String, InventoryItem> = HashMap()
+    private val chestInventories: HashMap<String, ChestInventoryUI> = HashMap()
 
-    /**
-     * Registers a single item
-     * @param item The item to register
-     */
-    fun registerItem(item: InventoryItem) {
-        items[item.uuid.toString()] = item
+    fun registerInventory(inv: ChestInventoryUI) {
+        chestInventories[inv.uuid.toString()] = inv
     }
 
     /**
      * The handler for a button click event, comparing against registry entries
+     * @param inventory The [Inventory] the button was clicked in
      * @param itemStack The [ItemStack] that was clicked
      * @return If the click event should be cancelled
      */
-    fun buttonClick(itemStack: ItemStack): Boolean {
-        val meta = itemStack.itemMeta
-        val itemId = meta.persistentDataContainer.get(NamespacedKey("invctrl", "item_id"), PersistentDataType.STRING)
+    fun buttonClick(inventory: Inventory, itemStack: ItemStack): Boolean {
+        val holder = inventory.holder as? ChestInventoryHolder ?: return false
+        val chestInventory = chestInventories[holder.uuid.toString()] ?: return false
 
-        if(items.containsKey(itemId)) {
-            val item = items[itemId]!!
-            item.handleOnClick()
+        val inventoryItem = chestInventory.currentItems.entries
+            .firstOrNull { (_, stack) -> stack.isSimilar(itemStack) }
+            ?.key
+            ?: return false
 
-            return item.cancelClickEvents
-        }
-
-        return false
+        inventoryItem.handleOnClick()
+        return inventoryItem.cancelClickEvents
     }
 }

@@ -4,8 +4,10 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemStack
+import xyz.devcmb.invcontrol.Registry
 import xyz.devcmb.invcontrol.common.AbstractInventoryUI
-import xyz.devcmb.invcontrol.common.InventoryItem
+import java.util.UUID
 
 /**
  * The base for chest inventory menus
@@ -19,8 +21,24 @@ class ChestInventoryUI(
     title: Component = Component.text("Inventory"),
     val rows: Int = 3
 ) : AbstractInventoryUI(player) {
-    private val inv: Inventory = Bukkit.getServer().createInventory(player, rows * 9, title)
-    private val items: MutableList<InventoryItem> = ArrayList()
+    val uuid: UUID = UUID.randomUUID()
+    private val inv: Inventory
+
+    val pages: HashMap<String, ChestInventoryPage> = HashMap()
+    val currentItems: HashMap<InventoryItem, ItemStack> = HashMap()
+    var currentPage: ChestInventoryPage? = null
+
+    init {
+        Registry.registerInventory(this)
+
+        val holder = ChestInventoryHolder(uuid)
+        inv = Bukkit.getServer().createInventory(
+            holder,
+            rows * 9,
+            title
+        )
+        holder.inventory = inv
+    }
 
     /**
      * Shows the attached player the inventory
@@ -37,26 +55,28 @@ class ChestInventoryUI(
         propagateItems()
     }
 
-    /**
-     * Sets up the slots in the inventory with the formulated item stack
-     */
     private fun propagateItems() {
-        for(item in items) {
-            inv.setItem(item.slot, item.formulateItemStack())
+        inv.clear()
+        currentItems.clear()
+        if(currentPage == null) return
+
+        for(item in currentPage!!.items) {
+            val itemStack = item.formulateItemStack()
+            currentItems[item] = itemStack
+            inv.setItem(item.slot, itemStack)
         }
     }
 
-    /**
-     * Adds an item to the inventory
-     * @param item The [InventoryItem] to add to the inventory
-     */
-    fun addItem(item: InventoryItem) {
-        val maxSlot = (rows * 9 - 1)
-        if (item.slot < 0 || item.slot > maxSlot) {
-            throw IllegalArgumentException("Slot must be between 0 and $maxSlot")
+    fun addPage(id: String, page: ChestInventoryPage) {
+        pages[id] = page
+    }
+
+    fun setPage(id: String) {
+        if (pages.containsKey(id)) {
+            throw IllegalArgumentException("Page with ID $id does not exist or is not registered")
         }
 
-        items.add(item)
-        item.register(this)
+        currentPage = pages[id]
+        reload()
     }
 }

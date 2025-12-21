@@ -1,34 +1,31 @@
-package xyz.devcmb.invcontrol.common
+package xyz.devcmb.invcontrol.chest
 
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import xyz.devcmb.invcontrol.Registry
 import java.util.UUID
 
 /**
  * The main item class that the library keeps track of
- * @property getItemStack The method invoked to get the [ItemStack] whenever the inventory opens or is reloaded
- * @property slot The numerical slot where the [ItemStack] from [getItemStack] is placed. Must be at or below the amount of rows multiplied by 9 minus 1
+ * @property getItemStack The method invoked to get the [org.bukkit.inventory.ItemStack] whenever the inventory opens or is reloaded
+ * @property slot The numerical slot where the [org.bukkit.inventory.ItemStack] from [getItemStack] is placed. Must be at or below the amount of rows multiplied by 9 minus 1
  * @property onClick The method that is invoked whenever the element is clicked
  * @property cancelClickEvents Should clicking this item snap it back into the inventory it was pulled from
  */
 class InventoryItem(
     val getItemStack: () -> ItemStack,
     val slot: Int,
-    val onClick: (ui: AbstractInventoryUI) -> Unit = {},
+    val onClick: (page: ChestInventoryPage) -> Unit = {},
     val cancelClickEvents: Boolean = true
 ) {
-    internal var ui: AbstractInventoryUI? = null
-        private set
+    internal var page: ChestInventoryPage? = null
     internal var uuid: UUID = UUID.randomUUID()
 
     /**
      * Internal method for registering the parent UI and with the registry
      */
-    internal fun register(ui: AbstractInventoryUI) {
-        this.ui = ui
-        Registry.registerItem(this)
+    internal fun register(page: ChestInventoryPage) {
+        this.page = page
     }
 
     /**
@@ -48,9 +45,9 @@ class InventoryItem(
     }
 
     /**
-     * Internal method for handling click events. Currently only here to pass in the [ui] instance
+     * Internal method for handling click events. Currently only here to pass in the [page] instance
      */
     internal fun handleOnClick() {
-        onClick(ui!!)
+        onClick(page!!)
     }
 }
