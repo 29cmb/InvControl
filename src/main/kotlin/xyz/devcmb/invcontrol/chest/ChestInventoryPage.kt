@@ -1,5 +1,9 @@
 package xyz.devcmb.invcontrol.chest
 
+/**
+ * A single page for a chest inventory
+ * @property ui The UI instance the page is part of
+ */
 class ChestInventoryPage(val ui: ChestInventoryUI) {
     val items: MutableList<InventoryItem> = ArrayList()
 
@@ -17,6 +21,10 @@ class ChestInventoryPage(val ui: ChestInventoryUI) {
         item.register(this)
     }
 
+    /**
+     * Reload the inventory menu
+     * @throws IllegalStateException Exception for when the page is not currently active
+     */
     fun reload() {
         if(ui.currentPage !== this) {
             throw IllegalStateException("Cannot reload a page that is not active")

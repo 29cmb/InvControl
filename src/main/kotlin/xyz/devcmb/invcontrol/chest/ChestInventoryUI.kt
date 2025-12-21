@@ -55,6 +55,9 @@ class ChestInventoryUI(
         propagateItems()
     }
 
+    /**
+     * Fill the page with the current items
+     */
     private fun propagateItems() {
         inv.clear()
         currentItems.clear()
@@ -67,10 +70,18 @@ class ChestInventoryUI(
         }
     }
 
+    /**
+     * Registers a page to be set
+     * @param id The identifier of the page
+     * @param page The page class to put into the pages map
+     */
     fun addPage(id: String, page: ChestInventoryPage) {
         pages[id] = page
     }
 
+    /**
+     * Sets the active page
+     */
     fun setPage(id: String) {
         if (pages.containsKey(id)) {
             throw IllegalArgumentException("Page with ID $id does not exist or is not registered")
