@@ -1,0 +1,8 @@
+name: invcontrol
+version: '1.0.0-SNAPSHOT'
+main: xyz.devcmb.invcontrol.Invcontrol
+api-version: '1.21'
+prefix: InvControl
+authors: [DevCmb]
+description: Testing plugin for InvControl
+website: devcmb.xyz

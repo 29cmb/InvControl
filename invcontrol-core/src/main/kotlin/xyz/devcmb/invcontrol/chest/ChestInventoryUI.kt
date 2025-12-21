@@ -37,7 +37,7 @@ class ChestInventoryUI(
             rows * 9,
             title
         )
-        holder.inventory = inv
+        holder.inv = inv
     }
 
     /**

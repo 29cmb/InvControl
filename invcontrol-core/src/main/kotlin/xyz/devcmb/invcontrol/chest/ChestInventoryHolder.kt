@@ -11,6 +11,6 @@ import java.util.UUID
 class ChestInventoryHolder(
     val uuid: UUID,
 ) : InventoryHolder {
-    lateinit var inventory: Inventory
+    lateinit var inv: Inventory
     override fun getInventory(): Inventory = inventory
 }
