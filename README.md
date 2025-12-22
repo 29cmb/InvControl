@@ -1,4 +1,4 @@
-# InvControl
+![Logo](./docs/logo.png)
 *A simple inventories framework where you're in control*
 
 - Dynamic inventory updating
