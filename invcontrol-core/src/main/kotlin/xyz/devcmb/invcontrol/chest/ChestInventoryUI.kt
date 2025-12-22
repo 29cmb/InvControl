@@ -5,6 +5,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import xyz.devcmb.invcontrol.InvControlManager
 import xyz.devcmb.invcontrol.Registry
 import xyz.devcmb.invcontrol.common.AbstractInventoryUI
 import java.util.UUID
@@ -12,13 +13,13 @@ import java.util.UUID
 /**
  * The base for chest inventory menus
  * @property player The player that the UI is shown to.
- * @property title The title of the inventory UI. Defaults to "Inventory"
+ * @property title The title of the inventory UI. Defaults to "Menu"
  * @property rows The amount of rows in the inventory UI. Defaults to 3
  * @constructor Creates the inventory from the bukkit server method
  */
 class ChestInventoryUI(
     override val player: Player,
-    title: Component = Component.text("Inventory"),
+    val title: Component = Component.text("Menu"),
     val rows: Int = 3
 ) : AbstractInventoryUI(player) {
     val uuid: UUID = UUID.randomUUID()
@@ -29,6 +30,10 @@ class ChestInventoryUI(
     var currentPage: ChestInventoryPage? = null
 
     init {
+        if (InvControlManager.plugin == null) {
+            throw IllegalStateException("Cannot create an inventory UI unless the plugin is set. Use InvControlManager#setPlugin before creating UIs.")
+        }
+
         Registry.registerInventory(this)
 
         val holder = ChestInventoryHolder(uuid)
@@ -77,13 +82,14 @@ class ChestInventoryUI(
      */
     fun addPage(id: String, page: ChestInventoryPage) {
         pages[id] = page
+        page.register(this)
     }
 
     /**
      * Sets the active page
      */
     fun setPage(id: String) {
-        if (pages.containsKey(id)) {
+        if (!pages.containsKey(id)) {
             throw IllegalArgumentException("Page with ID $id does not exist or is not registered")
         }
 

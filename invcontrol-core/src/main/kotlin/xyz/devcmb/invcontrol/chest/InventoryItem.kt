@@ -15,11 +15,11 @@ import java.util.UUID
 class InventoryItem(
     val getItemStack: () -> ItemStack,
     val slot: Int,
-    val onClick: (page: ChestInventoryPage) -> Unit = {},
+    val onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
     val cancelClickEvents: Boolean = true
 ) {
     internal var page: ChestInventoryPage? = null
-    internal var uuid: UUID = UUID.randomUUID()
+    var uuid: UUID = UUID.randomUUID()
 
     /**
      * Internal method for registering the parent UI and with the registry
@@ -48,6 +48,6 @@ class InventoryItem(
      * Internal method for handling click events. Currently only here to pass in the [page] instance
      */
     internal fun handleOnClick() {
-        onClick(page!!)
+        onClick(page!!, this)
     }
 }
