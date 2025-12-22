@@ -1,11 +1,11 @@
 ![Logo](./docs/logo.png)
 *A simple inventories framework where you're in control*
 
-Demo video: https://www.youtube.com/watch?v=vWEbANOHIVk
-
 - Dynamic inventory updating
 - Fully handled click events
 - Most logic handled by your code, giving you total control
+
+Demo video: https://www.youtube.com/watch?v=vWEbANOHIVk
 
 ### Installation
 This library is intended for use on Minecraft Paper plugins on version 1.21.8 and onwards. To use this package, you're going to need to add `jitpack` to your build system repositories:
