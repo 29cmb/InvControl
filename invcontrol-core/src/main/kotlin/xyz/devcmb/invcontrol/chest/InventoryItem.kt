@@ -10,13 +10,11 @@ import java.util.UUID
  * @property getItemStack The method invoked to get the [org.bukkit.inventory.ItemStack] whenever the inventory opens or is reloaded
  * @property slot The numerical slot where the [org.bukkit.inventory.ItemStack] from [getItemStack] is placed. Must be at or below the amount of rows multiplied by 9 minus 1
  * @property onClick The method that is invoked whenever the element is clicked
- * @property cancelClickEvents Should clicking this item snap it back into the inventory it was pulled from
  */
 open class InventoryItem(
     open var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
     open var slot: Int,
-    open var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
-    open var cancelClickEvents: Boolean = true
+    open var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
 ) {
     internal var page: ChestInventoryPage? = null
     var uuid: UUID = UUID.randomUUID()

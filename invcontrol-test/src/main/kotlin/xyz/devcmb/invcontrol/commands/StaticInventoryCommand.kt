@@ -48,8 +48,7 @@ class StaticInventoryCommand : CommandExecutor {
                                 .color(NamedTextColor.YELLOW)
                                 .append(Component.text(item.uuid.toString())))
                     )
-                },
-                cancelClickEvents = true
+                }
             )
         )
 

@@ -25,16 +25,15 @@ internal object Registry {
      * @param itemStack The [ItemStack] that was clicked
      * @return If the click event should be cancelled
      */
-    fun buttonClick(inventory: Inventory, itemStack: ItemStack): Boolean {
-        val holder = inventory.holder as? ChestInventoryHolder ?: return false
-        val chestInventory = chestInventories[holder.uuid.toString()] ?: return false
+    fun buttonClick(inventory: Inventory, itemStack: ItemStack) {
+        val holder = inventory.holder as? ChestInventoryHolder ?: return
+        val chestInventory = chestInventories[holder.uuid.toString()] ?: return
 
         val inventoryItem = chestInventory.currentItems.entries
             .firstOrNull { (_, stack) -> stack.isSimilar(itemStack) }
             ?.key
-            ?: return false
+            ?: return
 
         inventoryItem.handleOnClick()
-        return inventoryItem.cancelClickEvents
     }
 }

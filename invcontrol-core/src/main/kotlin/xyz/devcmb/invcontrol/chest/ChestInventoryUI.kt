@@ -69,7 +69,6 @@ class ChestInventoryUI(
 
         for(item in currentPage!!.items) {
             val itemStack = item.formulateItemStack()
-            InvControlManager.plugin?.logger?.info(itemStack.type.toString())
             currentItems[item] = itemStack
             inv.setItem(item.slot, itemStack)
         }

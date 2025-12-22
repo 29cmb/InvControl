@@ -1,6 +1,5 @@
 package xyz.devcmb.invcontrol.chest.map
 
-import xyz.devcmb.invcontrol.InvControlManager
 import xyz.devcmb.invcontrol.chest.ChestInventoryPage
 
 /**
@@ -45,7 +44,6 @@ class InventoryItemMap(
         val items = ArrayList<InventoryMappedItem>(pageSlice.size)
         for ((i, item) in pageSlice.withIndex()) {
             item.slot = startSlot + i
-            InvControlManager.plugin?.logger?.info(item.slot.toString())
             items.add(item)
         }
 

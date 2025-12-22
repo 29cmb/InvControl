@@ -1,6 +1,5 @@
 package xyz.devcmb.invcontrol.chest
 
-import xyz.devcmb.invcontrol.InvControlManager
 import xyz.devcmb.invcontrol.chest.map.InventoryItemMap
 
 /**
@@ -62,7 +61,6 @@ class ChestInventoryPage() {
         formulatedItems.forEach {
             it.register(this)
             items.add(it)
-            InvControlManager.plugin?.logger?.info(it.formulateItemStack().type.toString())
         }
     }
 

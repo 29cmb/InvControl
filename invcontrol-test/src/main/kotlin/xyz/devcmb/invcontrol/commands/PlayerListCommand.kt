@@ -47,7 +47,7 @@ class PlayerListCommand : CommandExecutor {
                             val itemStack = ItemStack.of(Material.PLAYER_HEAD)
                             val meta = itemStack.itemMeta as SkullMeta
                             meta.owningPlayer = player
-                            meta.displayName(Component.text(player.name).color(NamedTextColor.YELLOW))
+                            meta.itemName(Component.text(player.name).color(NamedTextColor.YELLOW))
                             itemStack.itemMeta = meta
 
                             itemStack

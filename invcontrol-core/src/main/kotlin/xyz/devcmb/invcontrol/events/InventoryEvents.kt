@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import xyz.devcmb.invcontrol.Registry
+import xyz.devcmb.invcontrol.chest.ChestInventoryHolder
 
 /**
  * The [Listener] for most of the inventory events
@@ -11,11 +12,11 @@ import xyz.devcmb.invcontrol.Registry
 internal class InventoryEvents : Listener {
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
-        if(event.currentItem == null) return
-
-        val shouldCancel = Registry.buttonClick(event.inventory, event.currentItem!!)
-        if(shouldCancel) {
+        if(event.view.topInventory.holder is ChestInventoryHolder) {
             event.isCancelled = true
+            if(event.currentItem == null) return
+
+            Registry.buttonClick(event.view.topInventory, event.currentItem!!)
         }
     }
 }
