@@ -5,7 +5,8 @@ import xyz.devcmb.invcontrol.InvControl
 
 object CommandManager {
     fun registerAllCommands() {
-        registerCommand("basicinv", BasicInventoryCommand())
+        registerCommand("basicinv", StaticInventoryCommand())
+        registerCommand("aimtrainer", AimTrainerInventoryCommand())
     }
 
     private fun registerCommand(name: String, command: CommandExecutor) {

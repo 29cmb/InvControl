@@ -9,3 +9,5 @@ website: devcmb.xyz
 commands:
   basicinv:
     usage: /<command>
+  aimtrainer:
+    usage: /<command>

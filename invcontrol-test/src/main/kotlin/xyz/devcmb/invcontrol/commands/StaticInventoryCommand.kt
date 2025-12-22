@@ -9,12 +9,11 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
-import org.bukkit.inventory.meta.components.FoodComponent
 import xyz.devcmb.invcontrol.chest.ChestInventoryPage
 import xyz.devcmb.invcontrol.chest.ChestInventoryUI
 import xyz.devcmb.invcontrol.chest.InventoryItem
 
-class BasicInventoryCommand : CommandExecutor {
+class StaticInventoryCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
         command: Command,
@@ -33,7 +32,7 @@ class BasicInventoryCommand : CommandExecutor {
 
         mainPage.addItem(
             InventoryItem(
-                getItemStack = {
+                getItemStack = { _, _ ->
                     val itemStack: ItemStack = ItemStack.of(Material.FEATHER)
                     val meta: ItemMeta = itemStack.itemMeta
                     meta.itemName(Component.text("This is an item"))
@@ -54,8 +53,8 @@ class BasicInventoryCommand : CommandExecutor {
             )
         )
 
-        ui.show()
         ui.setPage("main")
+        ui.show()
 
         return true
     }
