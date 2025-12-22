@@ -47,7 +47,7 @@ class InventoryItem(
     }
 
     /**
-     * Internal method for handling click events. Currently only here to pass in the [page] instance
+     * Internal method for handling click events. Currently only here to pass in the instance of the [page] and [xyz.devcmb.invcontrol.chest.InventoryItem]
      */
     internal fun handleOnClick() {
         onClick(page!!, this)

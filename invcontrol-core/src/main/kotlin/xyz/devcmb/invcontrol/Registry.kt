@@ -11,6 +11,10 @@ import xyz.devcmb.invcontrol.chest.ChestInventoryUI
 internal object Registry {
     private val chestInventories: HashMap<String, ChestInventoryUI> = HashMap()
 
+    /**
+     * Registers a single inventory
+     * @param inv The inventory to registry
+     */
     fun registerInventory(inv: ChestInventoryUI) {
         chestInventories[inv.uuid.toString()] = inv
     }
