@@ -6,7 +6,7 @@
 
     <groupId>xyz.devcmb</groupId>
     <artifactId>invcontrol-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,4 +51,10 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/29cmb/InvControl</url>
+        </repository>
+    </distributionManagement>
 </project>

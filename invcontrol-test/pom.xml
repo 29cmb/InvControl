@@ -7,12 +7,11 @@
   <parent>
     <groupId>xyz.devcmb</groupId>
     <artifactId>invcontrol-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0</version>
   </parent>
 
   <artifactId>invcontrol-test</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <version>0.1.0</version>
 
   <properties>
     <java.version>21</java.version>
@@ -53,6 +52,12 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
     </plugins>
     <resources>
