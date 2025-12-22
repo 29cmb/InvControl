@@ -1,9 +1,50 @@
 ![Logo](./docs/logo.png)
 *A simple inventories framework where you're in control*
 
+Demo video: https://www.youtube.com/watch?v=vWEbANOHIVk
+
 - Dynamic inventory updating
 - Fully handled click events
 - Most logic handled by your code, giving you total control
+
+### Installation
+This library is intended for use on Minecraft Paper plugins on version 1.21.8 and onwards. To use this package, you're going to need to add `jitpack` to your build system repositories:
+
+If you're using gradle, put this repository into your `build.gradle.kts`
+```kotlin
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
+}
+```
+
+Or if you're using maven, enter this into your `pom.xml`
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+Once you have the repository set up, you can add the `invcontrol-core` dependency in your build system
+
+If you use gradle:
+```kotlin
+dependencies {
+    implementation("com.github.29cmb.InvControl:invcontrol-core:v0.1.0-1")
+}
+```
+
+Or if you use maven:
+```xml
+<dependency>
+    <groupId>com.github.29cmb</groupId>
+    <artifactId>InvControl</artifactId>
+    <version>v0.1.0-1</version>
+</dependency>
+```
 
 ### Basic Logic
 The main concepts of this library are the UI and the Page.
