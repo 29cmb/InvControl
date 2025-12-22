@@ -7,7 +7,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import xyz.devcmb.invcontrol.InvControlManager
 import xyz.devcmb.invcontrol.Registry
-import xyz.devcmb.invcontrol.common.AbstractInventoryUI
 import java.util.UUID
 
 /**
@@ -18,10 +17,10 @@ import java.util.UUID
  * @constructor Creates the inventory from the bukkit server method
  */
 class ChestInventoryUI(
-    override val player: Player,
+    val player: Player,
     val title: Component = Component.text("Menu"),
     val rows: Int = 3
-) : AbstractInventoryUI(player) {
+) {
     val uuid: UUID = UUID.randomUUID()
     private val inv: Inventory
 
@@ -48,7 +47,7 @@ class ChestInventoryUI(
     /**
      * Shows the attached player the inventory
      */
-    override fun show() {
+    fun show() {
         propagateItems()
         player.openInventory(inv)
     }
@@ -56,7 +55,7 @@ class ChestInventoryUI(
     /**
      * Reloads the inventory view
      */
-    override fun reload() {
+    fun reload() {
         propagateItems()
     }
 
