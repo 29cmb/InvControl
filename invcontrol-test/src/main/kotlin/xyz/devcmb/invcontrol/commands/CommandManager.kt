@@ -7,6 +7,7 @@ object CommandManager {
     fun registerAllCommands() {
         registerCommand("basicinv", StaticInventoryCommand())
         registerCommand("aimtrainer", AimTrainerInventoryCommand())
+        registerCommand("playerlist", PlayerListCommand())
     }
 
     private fun registerCommand(name: String, command: CommandExecutor) {

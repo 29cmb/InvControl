@@ -11,3 +11,5 @@ commands:
     usage: /<command>
   aimtrainer:
     usage: /<command>
+  playerlist:
+    usage: /<command>

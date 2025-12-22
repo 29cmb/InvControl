@@ -41,7 +41,7 @@ class AimTrainerInventoryCommand : CommandExecutor {
 
         for (i in 0..2) {
             mainPage.addItem(InventoryItem(
-                getItemStack = { ui, item ->
+                getItemStack = { page, item ->
                     if(arrowCount < i + 1) return@InventoryItem ItemStack.empty()
 
                     val item = ItemStack.of(Material.ARROW)
@@ -52,22 +52,27 @@ class AimTrainerInventoryCommand : CommandExecutor {
                     item
                 },
                 slot = slots[i],
-                onClick = { ui, item ->
+                onClick = { page, item ->
                     score++
                     val currentSlot = item.slot
                     val newSlot = pickUnoccupiedSlot(slots, 26)
                     slots.remove(currentSlot)
                     slots.add(newSlot)
                     item.slot = newSlot
-                    ui.reload()
+                    page.reload()
                 }
             ))
         }
 
         for(i in 27..35) {
             mainPage.addItem(InventoryItem(
-                getItemStack = { ui, item ->
-                    ItemStack.of(Material.BLACK_STAINED_GLASS_PANE)
+                getItemStack = { page, item ->
+                    val itemStack = ItemStack.of(Material.BLACK_STAINED_GLASS_PANE)
+                    val meta = itemStack.itemMeta
+                    meta.isHideTooltip = true
+                    itemStack.itemMeta = meta
+
+                    itemStack
                 },
                 slot = i
             ))
@@ -75,7 +80,7 @@ class AimTrainerInventoryCommand : CommandExecutor {
 
         // Reset button
         mainPage.addItem(InventoryItem(
-            getItemStack = { ui, item ->
+            getItemStack = { page, item ->
                 val itemStack = ItemStack.of(Material.RED_CONCRETE)
                 val meta = itemStack.itemMeta
                 meta.itemName(Component.text("Reset").color(NamedTextColor.RED).decorate(TextDecoration.BOLD))
@@ -83,15 +88,15 @@ class AimTrainerInventoryCommand : CommandExecutor {
                 itemStack
             },
             slot = 36,
-            onClick = { ui, item ->
+            onClick = { page, item ->
                 score = 0
-                ui.reload()
+                page.reload()
             }
         ))
 
         // Arrow count selector
         mainPage.addItem(InventoryItem(
-            getItemStack = { ui, item ->
+            getItemStack = { page, item ->
                 val itemStack = ItemStack.of(Material.SPECTRAL_ARROW)
                 val meta = itemStack.itemMeta
                 meta.itemName(Component.text("Mode").color(NamedTextColor.AQUA))
@@ -117,12 +122,12 @@ class AimTrainerInventoryCommand : CommandExecutor {
                 itemStack
             },
             slot = 44,
-            onClick = { ui, item ->
+            onClick = { page, item ->
                 arrowCount++
                 if(arrowCount > 3) {
                     arrowCount = 1
                 }
-                ui.reload()
+                page.reload()
             }
         ))
 

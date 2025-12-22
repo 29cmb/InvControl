@@ -1,5 +1,8 @@
 package xyz.devcmb.invcontrol.chest
 
+import xyz.devcmb.invcontrol.InvControlManager
+import xyz.devcmb.invcontrol.chest.map.InventoryItemMap
+
 /**
  * A single page for a chest inventory
  */
@@ -7,6 +10,10 @@ class ChestInventoryPage() {
     val items: MutableList<InventoryItem> = ArrayList()
     lateinit var ui: ChestInventoryUI
 
+    /**
+     * Internal function to register the page with a [ChestInventoryUI]
+     * @param inventoryUI The ui to register with
+     */
     internal fun register(inventoryUI: ChestInventoryUI) {
         this.ui = inventoryUI
     }
@@ -29,6 +36,34 @@ class ChestInventoryPage() {
 
         items.add(item)
         item.register(this)
+    }
+
+    /**
+     * Adds an item map to the page
+     * @param map The map to add
+     */
+    fun addItemMap(map: InventoryItemMap) {
+        if(!this::ui.isInitialized) {
+            throw IllegalStateException("Cannot add an item to a page before the page has been registered")
+        }
+
+        val maxSlot = (ui.rows * 9 - 1)
+        if (map.maxItems < 0 || map.maxItems > maxSlot) {
+            throw IllegalArgumentException("Max items must be between 0 and $maxSlot")
+        }
+
+        if(map.startSlot < 0 || map.startSlot > maxSlot) {
+            throw IllegalArgumentException("Start slot must be between 0 and $maxSlot")
+        }
+
+        map.register(this)
+
+        val formulatedItems = map.formulateItems()
+        formulatedItems.forEach {
+            it.register(this)
+            items.add(it)
+            InvControlManager.plugin?.logger?.info(it.formulateItemStack().type.toString())
+        }
     }
 
     /**

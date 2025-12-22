@@ -12,11 +12,11 @@ import java.util.UUID
  * @property onClick The method that is invoked whenever the element is clicked
  * @property cancelClickEvents Should clicking this item snap it back into the inventory it was pulled from
  */
-class InventoryItem(
-    var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
-    var slot: Int,
-    var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
-    var cancelClickEvents: Boolean = true
+open class InventoryItem(
+    open var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
+    open var slot: Int,
+    open var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
+    open var cancelClickEvents: Boolean = true
 ) {
     internal var page: ChestInventoryPage? = null
     var uuid: UUID = UUID.randomUUID()
@@ -31,7 +31,7 @@ class InventoryItem(
     /**
      * Internal method for setting up the item stack provided with the item identifier
      */
-    internal fun formulateItemStack(): ItemStack {
+    internal open fun formulateItemStack(): ItemStack {
         val stack: ItemStack = getItemStack(page!!, this)
         val meta = stack.itemMeta
         if(meta != null) { // Empty ItemStacks have no item meta
