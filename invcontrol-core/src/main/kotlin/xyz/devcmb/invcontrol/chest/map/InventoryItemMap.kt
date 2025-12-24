@@ -9,11 +9,11 @@ import xyz.devcmb.invcontrol.chest.ChestInventoryPage
  * @property maxItems The max amount of items that can be on a single item page
  * @property itemPage The page number for the items. Not to be confused with a [ChestInventoryPage]
  */
-class InventoryItemMap(
-    var getInventoryItems: (page: ChestInventoryPage, map: InventoryItemMap) -> ArrayList<InventoryMappedItem>,
-    var startSlot: Int,
-    var maxItems: Int,
-    var itemPage: Int,
+open class InventoryItemMap(
+    open var getInventoryItems: (page: ChestInventoryPage, map: InventoryItemMap) -> ArrayList<InventoryMappedItem>,
+    open var startSlot: Int,
+    open var maxItems: Int,
+    open var itemPage: Int,
 ) {
     lateinit var page: ChestInventoryPage
 

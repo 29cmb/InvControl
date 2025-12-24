@@ -9,7 +9,7 @@ import xyz.devcmb.invcontrol.chest.InventoryItem
  * @property getItemStack The method invoked to get the [org.bukkit.inventory.ItemStack] whenever the inventory opens or is reloaded
  * @property onClick The method that is invoked whenever the element is clicked
  */
-class InventoryMappedItem(
+open class InventoryMappedItem(
     override var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
     override var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
 ) : InventoryItem(getItemStack, -1, onClick)
