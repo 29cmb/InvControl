@@ -33,7 +33,7 @@ Once you have the repository set up, you can add the `invcontrol-core` dependenc
 If you use gradle:
 ```kotlin
 dependencies {
-    implementation("com.github.29cmb.InvControl:invcontrol-core:v0.1.1")
+    implementation("com.github.29cmb.InvControl:invcontrol-core:VERSION")
 }
 ```
 
@@ -42,7 +42,7 @@ Or if you use maven:
 <dependency>
     <groupId>com.github.29cmb</groupId>
     <artifactId>InvControl</artifactId>
-    <version>v0.1.1</version>
+    <version>VERSION</version>
 </dependency>
 ```
 
