@@ -8,6 +8,7 @@ import xyz.devcmb.invcontrol.chest.map.InventoryItemMap
 class ChestInventoryPage() {
     val items: MutableList<InventoryItem> = ArrayList()
     lateinit var ui: ChestInventoryUI
+    var lastButtonClick: Long = 0
 
     /**
      * Internal function to register the page with a [ChestInventoryUI]

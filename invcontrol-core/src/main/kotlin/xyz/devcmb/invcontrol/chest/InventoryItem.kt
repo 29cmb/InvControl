@@ -45,9 +45,13 @@ open class InventoryItem(
     }
 
     /**
-     * Internal method for handling click events. Currently only here to pass in the instance of the [page] and [xyz.devcmb.invcontrol.chest.InventoryItem]
+     * Internal method for handling click events.
+     * This passes the instance of the [page] and [xyz.devcmb.invcontrol.chest.InventoryItem] along to the function
+     * Alongside this, it also has a 150ms cooldown
      */
     internal fun handleOnClick() {
+        if(page!!.lastButtonClick + 150 > System.currentTimeMillis()) return // Cooldown to prevent double-clicking
+        page!!.lastButtonClick = System.currentTimeMillis()
         onClick(page!!, this)
     }
 }
