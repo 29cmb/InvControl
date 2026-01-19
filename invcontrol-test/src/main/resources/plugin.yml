@@ -13,3 +13,5 @@ commands:
     usage: /<command>
   playerlist:
     usage: /<command>
+  updatingmap:
+    usage: /<command>

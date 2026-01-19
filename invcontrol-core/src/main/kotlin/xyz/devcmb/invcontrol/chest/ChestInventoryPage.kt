@@ -7,8 +7,10 @@ import xyz.devcmb.invcontrol.chest.map.InventoryItemMap
  */
 class ChestInventoryPage() {
     val items: MutableList<InventoryItem> = ArrayList()
+    val itemMaps: MutableList<InventoryItemMap> = ArrayList()
+
     lateinit var ui: ChestInventoryUI
-    var lastButtonClick: Long = 0
+    internal var lastButtonClick: Long = 0
 
     /**
      * Internal function to register the page with a [ChestInventoryUI]
@@ -57,12 +59,7 @@ class ChestInventoryPage() {
         }
 
         map.register(this)
-
-        val formulatedItems = map.formulateItems()
-        formulatedItems.forEach {
-            it.register(this)
-            items.add(it)
-        }
+        itemMaps.add(map)
     }
 
     /**

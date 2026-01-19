@@ -72,6 +72,17 @@ class ChestInventoryUI(
             currentItems[item] = itemStack
             inv.setItem(item.slot, itemStack)
         }
+
+        for(map in currentPage!!.itemMaps) {
+            val items = map.formulateItems()
+            for(item in items) {
+                item.register(currentPage!!)
+
+                val itemStack = item.formulateItemStack()
+                currentItems[item] = itemStack
+                inv.setItem(item.slot, itemStack)
+            }
+        }
     }
 
     /**
