@@ -46,6 +46,13 @@ Or if you use maven:
 </dependency>
 ```
 
+Now that you have it installed, put the following line into your plugin's `onEnable` function
+```kotlin
+override fun onEnable() {
+    InvControlManager.setPlugin(this) // The first argument must be the plugin class. Best to put it here.
+}
+```
+
 ### Basic Logic
 The main concepts of this library are the UI and the Page.
 - The UI is the collection of pages that propagates and manages the inventory instance
