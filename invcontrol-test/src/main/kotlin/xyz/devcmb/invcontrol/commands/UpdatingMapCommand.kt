@@ -2,6 +2,7 @@ package xyz.devcmb.invcontrol.commands
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -48,7 +49,7 @@ class UpdatingMapCommand : CommandExecutor {
         val page = ChestInventoryPage()
         ui.addPage("main", page)
 
-        page.addItemMap(InventoryItemMap(
+        val map = InventoryItemMap(
             getInventoryItems = { _, _ ->
                 InvControl.pluginLogger.info("Getting inventory items for the changing item map")
                 val itemList: ArrayList<InventoryMappedItem> = ArrayList()
@@ -66,7 +67,8 @@ class UpdatingMapCommand : CommandExecutor {
             startSlot = 0,
             maxItems = 27,
             itemPage = 1,
-        ))
+        )
+        page.addItemMap(map)
 
         for(i in 27..35) {
             page.addItem(InventoryItem(
@@ -93,6 +95,46 @@ class UpdatingMapCommand : CommandExecutor {
             slot = 40,
             onClick = { page,_ ->
                 items.add(choices.random())
+                page.reload()
+            }
+        ))
+
+        page.addItem(InventoryItem(
+            getItemStack = { page, item ->
+                ItemStack.of(Material.ARROW).apply {
+                    val meta = itemMeta
+                    meta.itemName(Component.text("Previous Page").color(NamedTextColor.YELLOW))
+                    meta.lore(arrayListOf<Component>(
+                        Component.text("Page ").append(Component.text(map.itemPage.toString()))
+                            .color(NamedTextColor.WHITE)
+                            .decoration(TextDecoration.ITALIC, false)
+                    ))
+                    itemMeta = meta
+                }
+            },
+            slot = 36,
+            onClick = { page, _ ->
+                map.pageBack()
+                page.reload()
+            }
+        ))
+
+        page.addItem(InventoryItem(
+            getItemStack = { page, item ->
+                ItemStack.of(Material.ARROW).apply {
+                    val meta = itemMeta
+                    meta.itemName(Component.text("Next Page").color(NamedTextColor.YELLOW))
+                    meta.lore(arrayListOf<Component>(
+                        Component.text("Page ").append(Component.text(map.itemPage.toString()))
+                            .color(NamedTextColor.WHITE)
+                            .decoration(TextDecoration.ITALIC, false)
+                    ))
+                    itemMeta = meta
+                }
+            },
+            slot = 44,
+            onClick = { page, _ ->
+                map.pageForward()
                 page.reload()
             }
         ))

@@ -47,7 +47,7 @@ open class InventoryItemMap(
             items.add(item)
         }
 
-        return allItems
+        return items
     }
 
     /**

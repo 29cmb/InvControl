@@ -7,11 +7,11 @@
   <parent>
     <groupId>xyz.devcmb</groupId>
     <artifactId>invcontrol-parent</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
   </parent>
 
   <artifactId>invcontrol-test</artifactId>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
 
   <properties>
     <java.version>21</java.version>
@@ -83,7 +83,7 @@
     <dependency>
       <groupId>xyz.devcmb</groupId>
       <artifactId>invcontrol-core</artifactId>
-      <version>0.1.4</version>
+      <version>0.1.5</version>
     </dependency>
   </dependencies>
 </project>
