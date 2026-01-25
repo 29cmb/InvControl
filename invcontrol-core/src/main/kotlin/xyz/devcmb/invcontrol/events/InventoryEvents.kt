@@ -15,7 +15,7 @@ internal class InventoryEvents : Listener {
         if(event.view.topInventory.holder is ChestInventoryHolder) {
             event.isCancelled = true
             if(event.currentItem == null) return
-            Registry.buttonClick(event.view.topInventory, event.currentItem!!)
+            Registry.buttonClick(event.view.topInventory, event.currentItem!!, event.isRightClick)
         }
     }
 }

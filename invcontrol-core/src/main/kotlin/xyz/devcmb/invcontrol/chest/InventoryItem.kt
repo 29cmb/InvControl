@@ -14,7 +14,8 @@ import java.util.UUID
 open class InventoryItem(
     open var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
     open var slot: Int,
-    open var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
+    open var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
+    open var onRightClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
 ) {
     internal var page: ChestInventoryPage? = null
     var uuid: UUID = UUID.randomUUID()
@@ -53,5 +54,16 @@ open class InventoryItem(
         if(page!!.lastButtonClick + 150 > System.currentTimeMillis()) return // Cooldown to prevent double-clicking
         page!!.lastButtonClick = System.currentTimeMillis()
         onClick(page!!, this)
+    }
+
+    /**
+     * Internal method for handling right click events.
+     * This passes the instance of the [page] and [xyz.devcmb.invcontrol.chest.InventoryItem] along to the function
+     * Alongside this, it also has a 150ms cooldown
+     */
+    internal fun handleOnRightClick() {
+        if(page!!.lastButtonClick + 150 > System.currentTimeMillis()) return // Cooldown to prevent double-clicking
+        page!!.lastButtonClick = System.currentTimeMillis()
+        onRightClick(page!!, this)
     }
 }

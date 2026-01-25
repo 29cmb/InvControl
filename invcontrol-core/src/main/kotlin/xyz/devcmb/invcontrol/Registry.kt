@@ -25,7 +25,7 @@ internal object Registry {
      * @param itemStack The [ItemStack] that was clicked
      * @return If the click event should be cancelled
      */
-    fun buttonClick(inventory: Inventory, itemStack: ItemStack) {
+    fun buttonClick(inventory: Inventory, itemStack: ItemStack, isRightClick: Boolean) {
         val holder = inventory.holder as? ChestInventoryHolder ?: return
         val chestInventory = chestInventories[holder.uuid.toString()] ?: return
 
@@ -34,6 +34,10 @@ internal object Registry {
             ?.key
             ?: return
 
-        inventoryItem.handleOnClick()
+        if (isRightClick) {
+            inventoryItem.handleOnRightClick()
+        } else {
+            inventoryItem.handleOnClick()
+        }
     }
 }

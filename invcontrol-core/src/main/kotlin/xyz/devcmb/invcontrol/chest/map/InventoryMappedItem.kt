@@ -11,5 +11,6 @@ import xyz.devcmb.invcontrol.chest.InventoryItem
  */
 open class InventoryMappedItem(
     override var getItemStack: (page: ChestInventoryPage, item: InventoryItem) -> ItemStack,
-    override var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
+    override var onClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> },
+    override var onRightClick: (page: ChestInventoryPage, item: InventoryItem) -> Unit = { page, item -> }
 ) : InventoryItem(getItemStack, -1, onClick)
