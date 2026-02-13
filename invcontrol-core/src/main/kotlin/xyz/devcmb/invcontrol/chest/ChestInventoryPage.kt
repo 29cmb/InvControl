@@ -50,7 +50,7 @@ class ChestInventoryPage() {
         }
 
         val maxSlot = (ui.rows * 9 - 1)
-        if (map.maxItems < 0 || map.maxItems > maxSlot) {
+        if (map.maxItems < 0 || map.maxItems > (maxSlot + 1)) {
             throw IllegalArgumentException("Max items must be between 0 and $maxSlot")
         }
 
