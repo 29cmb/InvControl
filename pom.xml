@@ -8,6 +8,9 @@
     <artifactId>invcontrol-parent</artifactId>
     <version>0.1.5</version>
 
+    <name>InvControl</name>
+    <description>A simple inventories framework for minecraft 1.21 paper servers that allows creation of inventories in a single class.</description>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
