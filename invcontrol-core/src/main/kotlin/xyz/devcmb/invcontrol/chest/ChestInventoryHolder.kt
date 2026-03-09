@@ -6,7 +6,7 @@ import java.util.UUID
 
 /**
  * The holder class for the UUID
- * @property uuid The unique identifier for the inventory holder
+ * @param uuid The unique identifier for the inventory holder
  */
 class ChestInventoryHolder(
     val uuid: UUID,

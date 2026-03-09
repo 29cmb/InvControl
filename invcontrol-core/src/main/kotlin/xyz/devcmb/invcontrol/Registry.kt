@@ -34,10 +34,7 @@ internal object Registry {
             ?.key
             ?: return
 
-        if (isRightClick) {
-            inventoryItem.handleOnRightClick()
-        } else {
-            inventoryItem.handleOnClick()
-        }
+        if (isRightClick) inventoryItem.handleOnRightClick()
+        else inventoryItem.handleOnClick()
     }
 }

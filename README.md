@@ -66,7 +66,7 @@ Here is an example of a UI and page in its simplest form
 fun createInventory(player: Player) {
     // Creates an inventory with 3 rows
     val ui = ChestInventoryUI(
-        player,
+        player = player, // Optional, if null, provide a player when calling `show()`
         title = Component.text("Title"),
         rows = 3
     )

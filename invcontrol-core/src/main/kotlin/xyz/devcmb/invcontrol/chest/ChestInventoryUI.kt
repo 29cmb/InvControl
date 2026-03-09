@@ -11,15 +11,15 @@ import java.util.UUID
 
 /**
  * The base for chest inventory menus
- * @property player The player that the UI is shown to.
- * @property title The title of the inventory UI. Defaults to "Menu"
- * @property rows The amount of rows in the inventory UI. Defaults to 3
+ * @param player The player that the UI is shown to. If not specified, it must be provided when calling [show].
+ * @param title The title of the inventory UI. Defaults to "Menu"
+ * @param rows The amount of rows in the inventory UI. Defaults to 3
  * @constructor Creates the inventory from the bukkit server method
  */
 class ChestInventoryUI(
-    val player: Player,
+    val player: Player?,
     val title: Component = Component.text("Menu"),
-    val rows: Int = 3
+    val rows: Int = 3,
 ) {
     val uuid: UUID = UUID.randomUUID()
     private val inv: Inventory
@@ -29,9 +29,8 @@ class ChestInventoryUI(
     var currentPage: ChestInventoryPage? = null
 
     init {
-        if (InvControlManager.plugin == null) {
+        if (InvControlManager.plugin == null)
             throw IllegalStateException("Cannot create an inventory UI unless the plugin is set. Use InvControlManager#setPlugin before creating UIs.")
-        }
 
         Registry.registerInventory(this)
 
@@ -47,10 +46,15 @@ class ChestInventoryUI(
     /**
      * Shows the attached player the inventory
      */
-    fun show() {
+    fun show(player: Player?) {
+        if(player == null)
+            throw IllegalStateException("Cannot show an inventory ")
+
         propagateItems()
         player.openInventory(inv)
     }
+
+    fun show() = show(player)
 
     /**
      * Reloads the inventory view

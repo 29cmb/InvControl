@@ -15,7 +15,7 @@ open class InventoryItemMap(
     open var maxItems: Int,
     open var itemPage: Int,
 ) {
-    lateinit var page: ChestInventoryPage
+    internal lateinit var page: ChestInventoryPage
 
     /**
      * The internal function to register the map
