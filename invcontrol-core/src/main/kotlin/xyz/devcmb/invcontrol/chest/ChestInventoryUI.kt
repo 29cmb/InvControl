@@ -107,7 +107,7 @@ class ChestInventoryUI(
      * @param page The page class to put into the pages map
      * @param default Sets the default page when opening the menu to [page]. If there is no default, it will leave you where you last were
      */
-    fun addPage(id: String, page: ChestInventoryPage, default: Boolean) {
+    fun addPage(id: String, page: ChestInventoryPage, default: Boolean = false) {
         pages[id] = page
         page.register(this)
 
