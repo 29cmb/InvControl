@@ -11,22 +11,25 @@ import java.util.UUID
 
 /**
  * The base for chest inventory menus
- * @param player The player that the UI is shown to. If not specified, it must be provided when calling [show].
+ * @param player The player that the UI is shown to.
  * @param title The title of the inventory UI. Defaults to "Menu"
  * @param rows The amount of rows in the inventory UI. Defaults to 3
  * @constructor Creates the inventory from the bukkit server method
  */
 class ChestInventoryUI(
-    val player: Player?,
-    val title: Component = Component.text("Menu"),
-    val rows: Int = 3,
+    val player: Player,
+    var title: Component = Component.text("Menu"),
+    var rows: Int = 3,
 ) {
     val uuid: UUID = UUID.randomUUID()
-    private val inv: Inventory
+    private lateinit var inv: Inventory
 
     val pages: HashMap<String, ChestInventoryPage> = HashMap()
     val currentItems: HashMap<InventoryItem, ItemStack> = HashMap()
     var currentPage: ChestInventoryPage? = null
+
+    var currentTitle: Component = title
+    var currentRows: Int = rows
 
     init {
         if (InvControlManager.plugin == null)
@@ -34,13 +37,7 @@ class ChestInventoryUI(
 
         Registry.registerInventory(this)
 
-        val holder = ChestInventoryHolder(uuid)
-        inv = Bukkit.getServer().createInventory(
-            holder,
-            rows * 9,
-            title
-        )
-        holder.inv = inv
+        createInventory()
     }
 
     /**
@@ -49,6 +46,12 @@ class ChestInventoryUI(
     fun show(player: Player?) {
         if(player == null)
             throw IllegalStateException("Cannot show an inventory ")
+
+        if(title != currentTitle || currentRows != rows) {
+            createInventory()
+            currentTitle = title
+            currentRows = rows
+        }
 
         propagateItems()
         player.openInventory(inv)
@@ -60,6 +63,14 @@ class ChestInventoryUI(
      * Reloads the inventory view
      */
     fun reload() {
+        if(title != currentTitle || currentRows != rows) {
+            createInventory()
+            currentTitle = title
+            currentRows = rows
+
+            player.openInventory(inv)
+        }
+
         propagateItems()
     }
 
@@ -109,5 +120,20 @@ class ChestInventoryUI(
 
         currentPage = pages[id]
         reload()
+    }
+
+    /**
+     * Creates the bukkit inventory instance
+     */
+    internal fun createInventory() {
+        val holder = ChestInventoryHolder(uuid)
+        val inventory = Bukkit.getServer().createInventory(
+            holder,
+            rows * 9,
+            title
+        )
+        holder.inv = inventory
+
+        inv = inventory
     }
 }
