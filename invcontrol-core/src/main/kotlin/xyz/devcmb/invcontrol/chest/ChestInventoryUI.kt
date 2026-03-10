@@ -28,6 +28,8 @@ class ChestInventoryUI(
     val currentItems: HashMap<InventoryItem, ItemStack> = HashMap()
     var currentPage: ChestInventoryPage? = null
 
+    var defaultPage: String? = null
+
     var currentTitle: Component = title
     var currentRows: Int = rows
 
@@ -43,21 +45,20 @@ class ChestInventoryUI(
     /**
      * Shows the attached player the inventory
      */
-    fun show(player: Player?) {
-        if(player == null)
-            throw IllegalStateException("Cannot show an inventory ")
-
+    fun show() {
         if(title != currentTitle || currentRows != rows) {
             createInventory()
             currentTitle = title
             currentRows = rows
         }
 
+        if(pages.containsKey(defaultPage)) {
+            currentPage = pages[defaultPage]!!
+        }
+
         propagateItems()
         player.openInventory(inv)
     }
-
-    fun show() = show(player)
 
     /**
      * Reloads the inventory view
@@ -104,10 +105,15 @@ class ChestInventoryUI(
      * Registers a page to be set
      * @param id The identifier of the page
      * @param page The page class to put into the pages map
+     * @param default Sets the default page when opening the menu to [page]. If there is no default, it will leave you where you last were
      */
-    fun addPage(id: String, page: ChestInventoryPage) {
+    fun addPage(id: String, page: ChestInventoryPage, default: Boolean) {
         pages[id] = page
         page.register(this)
+
+        if(default) {
+            defaultPage = id
+        }
     }
 
     /**
