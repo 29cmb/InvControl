@@ -3,13 +3,13 @@
     <parent>
         <groupId>xyz.devcmb</groupId>
         <artifactId>invcontrol-parent</artifactId>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
     </parent>
 
     <packaging>jar</packaging>
 
     <artifactId>invcontrol-core</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>

@@ -128,6 +128,8 @@ class ChestInventoryUI(
         reload()
     }
 
+    fun close() = inv.close()
+
     /**
      * Creates the bukkit inventory instance
      */
