@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <artifactId>invcontrol-core</artifactId>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
@@ -24,13 +24,6 @@
                         <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -58,8 +58,9 @@ class PlayerListCommand : CommandExecutor {
                 items
             },
             startSlot = 0,
-            maxItems = 36,
+            maxItems = 3,
             itemPage = 1,
+            slots = arrayListOf(1, 3, 5)
         )
         page.addItemMap(itemMap)
 

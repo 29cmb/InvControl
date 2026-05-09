@@ -14,6 +14,7 @@ open class InventoryItemMap(
     open var startSlot: Int,
     open var maxItems: Int,
     open var itemPage: Int,
+    open var slots: ArrayList<Int>? = null
 ) {
     internal lateinit var page: ChestInventoryPage
 
@@ -34,6 +35,10 @@ open class InventoryItemMap(
         val allItems = getInventoryItems(page, this)
         if (maxItems <= 0) return ArrayList()
 
+        if (slots != null && slots!!.size < maxItems) {
+            throw IllegalArgumentException("Not enough slot indices were provided to properly fit $maxItems items (maxItems)")
+        }
+
         val pageIndex = maxOf(1, itemPage)
         val startIndex = (pageIndex - 1) * maxItems
         if (startIndex >= allItems.size) return ArrayList()
@@ -43,7 +48,8 @@ open class InventoryItemMap(
 
         val items = ArrayList<InventoryMappedItem>(pageSlice.size)
         for ((i, item) in pageSlice.withIndex()) {
-            item.slot = startSlot + i
+            val assignedSlot = slots?.get(i) ?: (startSlot + i)
+            item.slot = assignedSlot
             items.add(item)
         }
 
