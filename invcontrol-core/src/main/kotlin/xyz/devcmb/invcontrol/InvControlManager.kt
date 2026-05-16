@@ -1,25 +1,25 @@
 package xyz.devcmb.invcontrol
 
+import org.bukkit.Bukkit
+import org.bukkit.NamespacedKey
+import org.bukkit.event.HandlerList
 import org.bukkit.plugin.Plugin
-import xyz.devcmb.invcontrol.events.EventManager
 
-/**
- * The main state management for the library
- */
 object InvControlManager {
-    internal var plugin: Plugin? = null
+    var inventoryEvents: InventoryEvents? = null
+    val INV_CONTROL_ITEM_ID = NamespacedKey("invcontrol", "item_id")
 
-    /**
-     * Sets the [InvControlManager.plugin] for event calls
-     * @param plugin The plugin instance
-     * @throws IllegalStateException Exception when the plugin is already set
-     */
-    fun setPlugin(plugin: Plugin) {
-        if (this.plugin != null) {
-            throw IllegalStateException("Plugin is already set.")
+    internal var plugin: Plugin? = null
+        set(value) {
+            inventoryEvents?.let { HandlerList.unregisterAll(it) }
+            value?.let {
+                inventoryEvents = InventoryEvents()
+                Bukkit.getServer().pluginManager.registerEvents(inventoryEvents!!, it)
+            }
+            field = value
         }
 
+    fun setPlugin(plugin: Plugin?) {
         this.plugin = plugin
-        EventManager.registerAllEvents()
     }
 }

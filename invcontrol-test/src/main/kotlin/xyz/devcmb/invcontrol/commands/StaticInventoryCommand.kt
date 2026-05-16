@@ -8,12 +8,26 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.ItemMeta
-import xyz.devcmb.invcontrol.chest.ChestInventoryPage
-import xyz.devcmb.invcontrol.chest.ChestInventoryUI
-import xyz.devcmb.invcontrol.chest.InventoryItem
+import xyz.devcmb.invcontrol.chest.ChestInventory
+import xyz.devcmb.invcontrol.item.StaticItem
 
 class StaticInventoryCommand : CommandExecutor {
+    val inventory = ChestInventory {
+        page("main", Component.text("Static Inventory"), 3, true) {
+            item(StaticItem {
+                type = Material.ARROW
+                slot = 12
+
+                onClick {
+                    player.sendMessage(Component.text(item.id.toString(), NamedTextColor.YELLOW))
+                }
+            })
+            item(ItemStack(Material.ARROW), 14) {
+                player.sendMessage(Component.text(item.id.toString(), NamedTextColor.YELLOW))
+            }
+        }
+    }
+
     override fun onCommand(
         sender: CommandSender,
         command: Command,
@@ -25,35 +39,7 @@ class StaticInventoryCommand : CommandExecutor {
             return true
         }
 
-        val ui = ChestInventoryUI(sender)
-
-        val mainPage = ChestInventoryPage()
-        ui.addPage("main", mainPage)
-
-        mainPage.addItem(
-            InventoryItem(
-                getItemStack = { _, _ ->
-                    val itemStack: ItemStack = ItemStack.of(Material.FEATHER)
-                    val meta: ItemMeta = itemStack.itemMeta
-                    meta.itemName(Component.text("This is an item"))
-                    itemStack.itemMeta = meta
-
-                    itemStack
-                },
-                slot = 13,
-                onClick = { _, item ->
-                    sender.sendMessage(
-                        Component.empty()
-                            .append(Component.text("This is a message from an item with UUID ")
-                                .color(NamedTextColor.YELLOW)
-                                .append(Component.text(item.uuid.toString())))
-                    )
-                }
-            )
-        )
-
-        ui.setPage("main")
-        ui.show()
+        inventory.show(sender)
 
         return true
     }
